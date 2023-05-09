@@ -100,5 +100,27 @@ class TestYoutube(unittest.TestCase):
         # Verifica se o resultado tem o mesmo número de linhas que os dados fictícios
         self.assertEqual(len(renamed_members_df), len(fake_members_df))
 
+    def test_extract_channel_id(self):
+        # Exemplos de URLs do canal do YouTube
+        test_data = [
+            {
+                'input': 'https://www.youtube.com/channel/UCZxr48h7_qEXuM1imy6NcCg/join',
+                'expected_output': 'UCZxr48h7_qEXuM1imy6NcCg'
+            },
+            {
+                'input': 'https://youtube.com/channel/UCFuIUoyHB12qpYa8Jpxoxow',
+                'expected_output': 'UCFuIUoyHB12qpYa8Jpxoxow'
+            },
+            {
+                'input': 'https://www.youtube.com/channel/UCw5sX8pDXdaBk8hOlRLyI0A/about',
+                'expected_output': 'UCw5sX8pDXdaBk8hOlRLyI0A'
+            }
+        ]
+
+        # Testa a função extract_channel_id para cada exemplo de dados
+        for data in test_data:
+            channel_id = youtube_membership.extract_channel_id(data['input'])
+            self.assertEqual(channel_id, data['expected_output'])
+
 if __name__ == '__main__':
     unittest.main()
