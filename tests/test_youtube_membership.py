@@ -136,5 +136,36 @@ class TestYoutube(unittest.TestCase):
             channel_id = youtube_membership.extract_channel_id(data['input'])
             self.assertEqual(channel_id, data['expected_output'])
 
+    def test_get_member(self):
+        # Exemplo de dados de membro
+        fake_member = {
+            'name': 'João Silva',
+            'profile_url': 'https://www.youtube.com/channel/UC-CQ5189EZ4hRDxwHtD7Sog',
+            'membership_level': 'Compilador',
+            'total_time_in_level': 12.5,
+            'total_time_as_member': 12.5,
+            'last_update': 'Virou assinante',
+            'last_update_timestamp': '2023-05-03T05:32:33.558-07:00'
+        }
+
+        # Exemplos de URL de foto e imagem de emblema
+        fake_photo_url = 'https://yt3.googleusercontent.com/ytc/AGIKgqNYnWV_wrW9eSH1bz2akU2yUHBPXV9NE383_YAsvA=s176-c-k-c0x00ffffff-no-rj'
+        fake_badge_image = 'assets\\badges\\12_months.png'
+
+        # Utiliza MagicMock para simular o resultado das funções get_user_photo_url
+        with patch('core.youtube_membership.get_user_photo_url', MagicMock(return_value=fake_photo_url)):
+            result = youtube_membership.get_member(fake_member)
+
+        # Verifica se os dados do membro resultante estão corretos
+        self.assertEqual(result['name'], fake_member['name'])
+        self.assertEqual(result['profile_url'], fake_member['profile_url'])
+        self.assertEqual(result['photo_url'], fake_photo_url)
+        self.assertEqual(result['membership_level'], fake_member['membership_level'])
+        self.assertEqual(result['total_time_in_level'], fake_member['total_time_in_level'])
+        self.assertEqual(result['total_time_as_member'], fake_member['total_time_as_member'])
+        self.assertEqual(result['last_update'], fake_member['last_update'])
+        self.assertEqual(result['last_update_timestamp'], fake_member['last_update_timestamp'])
+        self.assertEqual(result['badge_image'], fake_badge_image)
+
 if __name__ == '__main__':
     unittest.main()
