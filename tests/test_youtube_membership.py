@@ -9,7 +9,7 @@ from core import youtube_membership
 class TestYoutube(unittest.TestCase):
     
     def test_get_members_from_csv(self):
-     # Dados fictícios para teste
+        # Dados fictícios para teste
         fake_data = [
             {
                 'Membros': 'João Silva',
@@ -72,6 +72,33 @@ class TestYoutube(unittest.TestCase):
             expected_badge_image_path = os.path.join('assets', 'badges', expected_badge_file_name)
 
             self.assertEqual(badge_image_path, expected_badge_image_path)
+
+    def test_rename_csv_columns(self):
+        # Dados fictícios para teste
+        fake_data = [
+            {
+                'Membros': 'João Silva',
+                'Link do perfil': 'https://www.youtube.com/channel/UC-CQ5189EZ4hRDxwHtD7Sog',
+                'Nível atual': 'Compilador',
+                'Tempo total no nível (meses)': 0.5,
+                'Tempo total como assinante (meses)': 0.5,
+                'Última atualização': 'Virou assinante',
+                'Carimbo de data/hora da última atualização': '2023-05-03T05:32:33.558-07:00'
+            }
+        ]
+
+        # Cria um DataFrame pandas com os dados fictícios
+        fake_members_df = pd.DataFrame(fake_data)
+
+        # Renomeia as colunas do DataFrame
+        renamed_members_df = youtube_membership.rename_csv_columns(fake_members_df)
+
+        # Verifica se as colunas do DataFrame resultado estão corretamente renomeadas
+        expected_columns = ['name', 'profile_url', 'membership_level', 'total_time_in_level', 'total_time_as_member', 'last_update', 'last_update_timestamp']
+        self.assertListEqual(list(renamed_members_df.columns), expected_columns)
+
+        # Verifica se o resultado tem o mesmo número de linhas que os dados fictícios
+        self.assertEqual(len(renamed_members_df), len(fake_members_df))
 
 if __name__ == '__main__':
     unittest.main()
