@@ -100,6 +100,20 @@ class TestYoutube(unittest.TestCase):
         # Verifica se o resultado tem o mesmo número de linhas que os dados fictícios
         self.assertEqual(len(renamed_members_df), len(fake_members_df))
 
+    def test_get_user_photo_url(self):
+        # Exemplo de URL do canal do YouTube
+        test_data = 'https://youtube.com/channel/UCFuIUoyHB12qpYa8Jpxoxow'
+
+        # Exemplo de resposta da API do YouTube para a URL da foto do perfil
+        fake_photo_url = 'https://yt3.googleusercontent.com/ytc/AGIKgqNYnWV_wrW9eSH1bz2akU2yUHBPXV9NE383_YAsvA=s176-c-k-c0x00ffffff-no-rj'
+
+        # Utiliza MagicMock para simular o resultado de fetch_channel_photo_url
+        with patch('core.youtube_membership.fetch_channel_photo_url', MagicMock(return_value=fake_photo_url)):
+            photo_url = youtube_membership.get_user_photo_url(test_data)
+
+        # Verifica se a URL da foto do perfil é a esperada
+        self.assertEqual(photo_url, fake_photo_url)
+
     def test_extract_channel_id(self):
         # Exemplos de URLs do canal do YouTube
         test_data = [
