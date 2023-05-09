@@ -100,5 +100,7 @@ def get_member(member):
         'membership_level': member['membership_level'],
         'total_time_in_level': member['total_time_in_level'],
         'total_time_as_member': member['total_time_as_member'],
+        'last_update': member['last_update'],
+        'last_update_timestamp': member['last_update_timestamp'],
         'badge_image': badge_image
     }

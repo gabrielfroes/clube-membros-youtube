@@ -15,6 +15,7 @@ def main():
     print(f"Foto: {member['photo_url']}")
     print(f"Nível: {member['membership_level']}")
     print(f"Tempo Assinatura: {member['total_time_as_member']} meses")
+    print(f"Atualização: {member['last_update']}")
     print(f"Badge: {member['badge_image']}")
     print(f"===================================================")
 
