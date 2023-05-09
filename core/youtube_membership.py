@@ -69,27 +69,21 @@ def fetch_channel_photo_url(channel_id):
         return None
    
 def get_membership_badge_image(months):
-    badge_file_name = None
-    if months < 1:
-        badge_file_name = "new.png"
-    elif months < 2:
-        badge_file_name = "1_month.png"
-    elif months < 6:
-        badge_file_name = "2_months.png"
-    elif months < 12:
-        badge_file_name = "6_months.png"
-    elif months < 24:
-        badge_file_name = "12_months.png"
-    elif months < 36:
-        badge_file_name = "24_months.png"
-    elif months < 48:
-        badge_file_name = "36_months.png"
-    else:
-        badge_file_name = "48_months.png"
+    badge_data = [
+        (1, "new.png"),
+        (2, "1_month.png"),
+        (6, "2_months.png"),
+        (12, "6_months.png"),
+        (24, "12_months.png"),
+        (36, "24_months.png"),
+        (48, "36_months.png"),
+        (float('inf'), "48_months.png")
+    ]
 
-    badge_image_path = os.path.join('assets', 'badges', badge_file_name)
-    return badge_image_path
-
+    for limit, badge_file_name in badge_data:
+        if months < limit:
+            badge_image_path = os.path.join('assets', 'badges', badge_file_name)
+            return badge_image_path
 
 def get_member(member):
     # Carrega dados extras do membro
