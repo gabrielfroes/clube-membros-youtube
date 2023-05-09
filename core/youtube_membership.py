@@ -11,16 +11,19 @@ def read_csv(file_path):
     return members_df
 
 def rename_csv_columns(members_df):
-    members_df = members_df.rename(columns={
-        'Membros': 'name',
-        'Link do perfil': 'profile_url',
-        'Nível atual': 'membership_level',
-        'Tempo total no nível (meses)': 'total_time_in_level',
-        'Tempo total como assinante (meses)': 'total_time_as_member',
-        'Última atualização': 'last_update',
-        'Carimbo de data/hora da última atualização': 'last_update_timestamp'
-    })
+    new_column_names = [
+        'name',
+        'profile_url',
+        'membership_level',
+        'total_time_in_level',
+        'total_time_as_member',
+        'last_update',
+        'last_update_timestamp'
+    ]
+    
+    members_df.columns = new_column_names
     return members_df
+
 
 def get_members_from_csv(file_path):
     members_df = read_csv(file_path)
